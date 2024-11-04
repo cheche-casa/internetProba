@@ -4,6 +4,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.internet.network.InternetApi
+import kotlinx.coroutines.launch
 
 class InternetViewModel : ViewModel() {
     /** The mutable State that stores the status of the most recent request */
@@ -22,6 +25,9 @@ class InternetViewModel : ViewModel() {
      * [MarsPhoto] [List] [MutableList].
      */
     fun getDatosInternet() {
-        internetUiState = "Set the Mars API status response here!"
+        viewModelScope.launch {
+            val listResult = InternetApi.retrofitService.getSerial()
+            internetUiState = listResult
+        }
     }
 }
