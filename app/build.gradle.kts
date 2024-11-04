@@ -50,7 +50,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -67,15 +66,16 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
-    implementation("androidx.activity:activity-compose:1.8.0")
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    // Las siguientes líneas son duplicadas y se pueden eliminar
+    // implementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    // implementation("androidx.activity:activity-compose:1.8.0")
+    // implementation("androidx.compose.material3:material3")
+    // implementation("androidx.compose.ui:ui")
+    // implementation("androidx.compose.ui:ui-tooling-preview")
+    // implementation("androidx.core:core-ktx:1.12.0")
+    // implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
 
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
-    debugImplementation("androidx.compose.ui:ui-tooling")
+    // debugImplementation("androidx.compose.ui:ui-test-manifest")
+    // debugImplementation("androidx.compose.ui:ui-tooling")
 }
