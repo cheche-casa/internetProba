@@ -20,17 +20,23 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun HomeScreen(
-    internetUiState: String,
+    internetUiState: InternetUiState,
     modifier: Modifier,
     strings: List<String>,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     ) {
-    val updatedList: List<String> = strings + internetUiState
+
+    val resultado: String
+    resultado = when (internetUiState) {
+        is InternetUiState.Loading -> " ... Cargando ..."
+        is InternetUiState.Success -> internetUiState.movementos
+        is InternetUiState.Error -> " ... Sen conexión ..."
+    }
+    val updatedList: List<String> = strings + resultado
     ResultScreen(updatedList, modifier.padding(top = contentPadding.calculateTopPadding()))
 }
 
@@ -85,14 +91,4 @@ fun ResultScreen(strings: List<String>, modifier: Modifier = Modifier){
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    HomeScreen(
-        internetUiState = "",
-        modifier = Modifier,
-        strings = listOf("Item 1", "Item 2", "Item 3")
-    )
 }

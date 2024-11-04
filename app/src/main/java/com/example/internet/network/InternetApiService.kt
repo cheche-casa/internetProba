@@ -4,7 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 
-private const val BASE_URL = "http://192.168.23.16:8888"
+private const val BASE_URL = "http://192.168.23.16:888"
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(ScalarsConverterFactory.create())
@@ -14,6 +14,9 @@ private val retrofit = Retrofit.Builder()
 interface InternetApiService {
     @GET("serial.ps1")
     suspend fun getSerial(): String
+
+    @GET("le.ps1?S=0")
+    suspend fun getMovementos(): String
 }
 
 object InternetApi {

@@ -7,10 +7,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.internet.network.InternetApi
 import kotlinx.coroutines.launch
+import java.io.IOException
+
+sealed interface InternetUiState {
+    data class Success(val movementos: String) : InternetUiState
+    object Error : InternetUiState
+    object Loading : InternetUiState
+}
 
 class InternetViewModel : ViewModel() {
     /** The mutable State that stores the status of the most recent request */
-    var internetUiState: String by mutableStateOf("")
+    var internetUiState: InternetUiState by mutableStateOf(InternetUiState.Loading)
         private set
 
     /**
@@ -26,8 +33,13 @@ class InternetViewModel : ViewModel() {
      */
     fun getDatosInternet() {
         viewModelScope.launch {
-            val listResult = InternetApi.retrofitService.getSerial()
-            internetUiState = listResult
+            try {
+                val listResult = InternetApi.retrofitService.getMovementos()
+                internetUiState = InternetUiState.Success(listResult)
+            }
+            catch (e: IOException) {
+                internetUiState = InternetUiState.Error
+            }
         }
     }
 }
