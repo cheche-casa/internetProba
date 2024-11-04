@@ -32,7 +32,8 @@ fun InternetApp() {
             val internetViewModel: InternetViewModel = viewModel()
             HomeScreen(
                 modifier = Modifier,
-                strings = listOf("Item 1", "Item 2", "Item 3")
+                strings = listOf("Item 1", "Item 2", "Item 3"),
+                contentPadding = it
             )
         }
     }
