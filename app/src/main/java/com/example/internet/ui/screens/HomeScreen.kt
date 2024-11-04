@@ -25,11 +25,13 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun HomeScreen(
+    internetUiState: String,
     modifier: Modifier,
     strings: List<String>,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     ) {
-    ResultScreen(strings, modifier.padding(top = contentPadding.calculateTopPadding()))
+    val updatedList: List<String> = strings + internetUiState
+    ResultScreen(updatedList, modifier.padding(top = contentPadding.calculateTopPadding()))
 }
 
 @Composable
@@ -89,6 +91,7 @@ fun ResultScreen(strings: List<String>, modifier: Modifier = Modifier){
 @Composable
 fun GreetingPreview() {
     HomeScreen(
+        internetUiState = "",
         modifier = Modifier,
         strings = listOf("Item 1", "Item 2", "Item 3")
     )
