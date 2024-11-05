@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.internet.data.NetworkInternetRepository
 import com.example.internet.network.InternetApi
 import com.example.internet.network.RexistroRemoto
 import kotlinx.coroutines.launch
@@ -35,7 +36,8 @@ class InternetViewModel : ViewModel() {
     fun getDatosInternet() {
         viewModelScope.launch {
             try {
-                val listResult = InternetApi.retrofitService.getMovementos()
+                val internetRepository = NetworkInternetRepository()
+                val listResult = internetRepository.getDatosInternet()
                 internetUiState = InternetUiState.Success(
                     listResult
                 )
