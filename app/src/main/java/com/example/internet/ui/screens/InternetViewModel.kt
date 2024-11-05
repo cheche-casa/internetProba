@@ -6,11 +6,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.internet.network.InternetApi
+import com.example.internet.network.RexistroRemoto
 import kotlinx.coroutines.launch
 import java.io.IOException
 
 sealed interface InternetUiState {
-    data class Success(val movementos: String) : InternetUiState
+    data class Success(val movementos: List<RexistroRemoto>) : InternetUiState
     object Error : InternetUiState
     object Loading : InternetUiState
 }
@@ -36,7 +37,7 @@ class InternetViewModel : ViewModel() {
             try {
                 val listResult = InternetApi.retrofitService.getMovementos()
                 internetUiState = InternetUiState.Success(
-                    "Conseguido: ${listResult.size} movementos recibidos"
+                    listResult
                 )
             }
             catch (e: IOException) {

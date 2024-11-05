@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.internet.network.RexistroRemoto
 
 @Composable
 fun HomeScreen(
@@ -30,18 +31,18 @@ fun HomeScreen(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     ) {
 
-    val resultado: String
+    val resultado: List<RexistroRemoto>
     resultado = when (internetUiState) {
-        is InternetUiState.Loading -> " ... Cargando ..."
+        is InternetUiState.Loading -> listOf(RexistroRemoto(1," ... Cargando ..."))
         is InternetUiState.Success -> internetUiState.movementos
-        is InternetUiState.Error -> " ... Sen conexión ..."
+        is InternetUiState.Error -> listOf(RexistroRemoto(1," ... Sen conexión ..."))
     }
-    val updatedList: List<String> = strings + resultado
+    val updatedList: List<RexistroRemoto> = resultado
     ResultScreen(updatedList, modifier.padding(top = contentPadding.calculateTopPadding()))
 }
 
 @Composable
-fun ResultScreen(strings: List<String>, modifier: Modifier = Modifier){
+fun ResultScreen(strings: List<RexistroRemoto>, modifier: Modifier = Modifier){
     var text by remember { mutableStateOf("") }
 
     Box (
@@ -61,7 +62,7 @@ fun ResultScreen(strings: List<String>, modifier: Modifier = Modifier){
                     .fillMaxWidth()
             ) {
                 items(strings) { string ->
-                    Text(text = string, modifier = Modifier.padding(8.dp))
+                    Text(text = string.comando, modifier = Modifier.padding(8.dp))
                 }
             }
 
