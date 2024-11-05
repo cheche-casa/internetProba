@@ -1,13 +1,17 @@
 package com.example.internet.network
 
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 
-private const val BASE_URL = "http://192.168.23.16:888"
-
+private const val BASE_URL = "http://192.168.0.16:8888"
+val json = Json {
+    ignoreUnknownKeys = true // Ignora las claves desconocidas en el JSON
+}
 private val retrofit = Retrofit.Builder()
-    .addConverterFactory(ScalarsConverterFactory.create())
+    .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
     .baseUrl(BASE_URL)
     .build()
 
@@ -16,7 +20,7 @@ interface InternetApiService {
     suspend fun getSerial(): String
 
     @GET("le.ps1?S=0")
-    suspend fun getMovementos(): String
+    suspend fun getMovementos(): List<RexistroRemoto>
 }
 
 object InternetApi {

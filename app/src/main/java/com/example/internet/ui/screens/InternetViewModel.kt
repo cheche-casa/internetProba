@@ -35,7 +35,9 @@ class InternetViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val listResult = InternetApi.retrofitService.getMovementos()
-                internetUiState = InternetUiState.Success(listResult)
+                internetUiState = InternetUiState.Success(
+                    "Conseguido: ${listResult.size} movementos recibidos"
+                )
             }
             catch (e: IOException) {
                 internetUiState = InternetUiState.Error
