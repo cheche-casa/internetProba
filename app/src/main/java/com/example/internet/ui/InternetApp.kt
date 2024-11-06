@@ -29,7 +29,8 @@ fun InternetApp() {
         Surface(
             modifier = Modifier.fillMaxSize()
         ) {
-            val internetViewModel: InternetViewModel = viewModel()
+            val internetViewModel: InternetViewModel =
+                viewModel(factory = InternetViewModel.Factory)
             HomeScreen(
                 modifier = Modifier,
                 internetUiState = internetViewModel.internetUiState,
