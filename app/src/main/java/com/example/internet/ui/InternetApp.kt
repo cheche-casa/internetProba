@@ -34,8 +34,8 @@ fun InternetApp() {
             HomeScreen(
                 modifier = Modifier,
                 internetUiState = internetViewModel.internetUiState,
-                strings = listOf("Item 1", "Item 2", "Item 3"),
-                contentPadding = it
+                contentPadding = it,
+                retryAction = internetViewModel::getDatosInternet
             )
         }
     }

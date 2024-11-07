@@ -27,8 +27,8 @@ import com.example.internet.network.RexistroRemoto
 fun HomeScreen(
     internetUiState: InternetUiState,
     modifier: Modifier,
-    strings: List<String>,
     contentPadding: PaddingValues = PaddingValues(0.dp),
+    retryAction: () -> Unit
     ) {
 
     val resultado: List<RexistroRemoto>
@@ -38,11 +38,19 @@ fun HomeScreen(
         is InternetUiState.Error -> listOf(RexistroRemoto(1," ... Sen conexión ..."))
     }
     val updatedList: List<RexistroRemoto> = resultado
-    ResultScreen(updatedList, modifier.padding(top = contentPadding.calculateTopPadding()))
+    ResultScreen(
+        updatedList,
+        modifier.padding(top = contentPadding.calculateTopPadding()),
+        retryAction = retryAction
+    )
 }
 
 @Composable
-fun ResultScreen(strings: List<RexistroRemoto>, modifier: Modifier = Modifier){
+fun ResultScreen(
+    strings: List<RexistroRemoto>,
+    modifier: Modifier = Modifier,
+    retryAction: () -> Unit
+){
     var text by remember { mutableStateOf("") }
 
     Box (
@@ -73,7 +81,7 @@ fun ResultScreen(strings: List<RexistroRemoto>, modifier: Modifier = Modifier){
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
-                label = { Text("Enter text") }
+                label = { Text("Introduce o comando") }
             )
 
             // Dos botones en la parte inferior
@@ -83,11 +91,11 @@ fun ResultScreen(strings: List<RexistroRemoto>, modifier: Modifier = Modifier){
                     .padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Button(onClick = { /* Acción del primer botón */ }) {
-                    Text("Button 1")
+                Button(onClick = { retryAction() }) {
+                    Text("Refresca")
                 }
                 Button(onClick = { /* Acción del segundo botón */ }) {
-                    Text("Button 2")
+                    Text("Grava")
                 }
             }
         }
