@@ -22,13 +22,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.internet.network.RexistroRemoto
+import kotlin.reflect.KFunction1
 
 @Composable
 fun HomeScreen(
     internetUiState: InternetUiState,
     modifier: Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    retryAction: () -> Unit
+    retryAction: KFunction1<Long, Unit>
     ) {
 
     val resultado: List<RexistroRemoto>
@@ -49,7 +50,7 @@ fun HomeScreen(
 fun ResultScreen(
     strings: List<RexistroRemoto>,
     modifier: Modifier = Modifier,
-    retryAction: () -> Unit
+    retryAction: KFunction1<Long, Unit>
 ){
     var text by remember { mutableStateOf("") }
 
@@ -91,7 +92,7 @@ fun ResultScreen(
                     .padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Button(onClick = { retryAction() }) {
+                Button(onClick = { retryAction(5) }) {
                     Text("Refresca")
                 }
                 Button(onClick = { /* Acción del segundo botón */ }) {

@@ -32,17 +32,17 @@ class InternetViewModel(
      * Call getMarsPhotos() on init so we can display status immediately.
      */
     init {
-        getDatosInternet()
+        getDatosInternet(serial = 0)
     }
 
     /**
      * Gets Mars photos information from the Mars API Retrofit service and updates the
      * [MarsPhoto] [List] [MutableList].
      */
-    fun getDatosInternet() {
+    fun getDatosInternet(serial: Long) {
         viewModelScope.launch {
             try {
-                val listResult = internetRepository.getDatosInternet()
+                val listResult = internetRepository.getDatosInternet(serial)
                 internetUiState = InternetUiState.Success(
                     listResult
                 )

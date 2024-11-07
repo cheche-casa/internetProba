@@ -4,12 +4,12 @@ import com.example.internet.network.InternetApiService
 import com.example.internet.network.RexistroRemoto
 
 interface InternetRepository {
-    suspend fun getDatosInternet(): List<RexistroRemoto>
+    suspend fun getDatosInternet(serial: Long): List<RexistroRemoto>
 }
 
 class NetworkInternetRepository(
     private val internetApiService: InternetApiService
 ) : InternetRepository {
-    override suspend fun getDatosInternet(): List<RexistroRemoto> =
-        internetApiService.getMovementos()
+    override suspend fun getDatosInternet(serial: Long): List<RexistroRemoto> =
+        internetApiService.getMovementos(serial)
 }
