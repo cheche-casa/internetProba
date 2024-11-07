@@ -12,6 +12,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.internet.InternetApplication
 import com.example.internet.data.InternetRepository
 import com.example.internet.network.RexistroRemoto
+import com.example.internet.network.Serial
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -19,6 +20,11 @@ sealed interface InternetUiState {
     data class Success(val movementos: List<RexistroRemoto>) : InternetUiState
     object Error : InternetUiState
     object Loading : InternetUiState
+}
+sealed interface InternetUiStateSerial {
+    data class Success(val serial: Serial) : InternetUiStateSerial
+    object Error : InternetUiStateSerial
+    object Loading : InternetUiStateSerial
 }
 
 class InternetViewModel(
