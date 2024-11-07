@@ -92,7 +92,7 @@ fun ResultScreen(
                     .padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Button(onClick = { retryAction(5) }) {
+                Button(onClick = { retryAction(text.toLong()) }) {
                     Text("Refresca")
                 }
                 Button(onClick = { /* Acción del segundo botón */ }) {
