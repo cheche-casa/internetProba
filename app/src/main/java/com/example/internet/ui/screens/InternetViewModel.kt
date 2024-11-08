@@ -77,6 +77,20 @@ class InternetViewModel(
         }
     }
 
+    fun putDatosInternet(comando: String){
+        viewModelScope.launch {
+            try {
+                val serialResult = internetRepository.putDatosInternet(comando)
+                internetUiStateSerial = InternetUiStateSerial.Success(
+                    serialResult
+                )
+            }
+            catch (e: IOException) {
+                internetUiStateSerial = InternetUiStateSerial.Error
+            }
+        }
+    }
+
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {

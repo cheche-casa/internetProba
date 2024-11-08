@@ -33,7 +33,8 @@ fun HomeScreen(
     internetUiStateSerial: InternetUiStateSerial,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     retryAction: KFunction1<Long, Unit>,
-    getSerial: () -> Unit
+    getSerial: () -> Unit,
+    putDatosInternet: KFunction1<String, Unit>,
     ) {
 
     val resultado: List<RexistroRemoto>
@@ -56,7 +57,8 @@ fun HomeScreen(
         serialString,
         modifier.padding(top = contentPadding.calculateTopPadding()),
         retryAction = retryAction,
-        getSerial = getSerial
+        getSerial = getSerial,
+        putDatosInternet = putDatosInternet
     )
 }
 
@@ -66,8 +68,9 @@ fun ResultScreen(
     serial: String,
     modifier: Modifier = Modifier,
     retryAction: KFunction1<Long, Unit>,
-    getSerial: () -> Unit
-){
+    getSerial: () -> Unit,
+    putDatosInternet: KFunction1<String, Unit>,
+    ){
     var text by remember { mutableStateOf("") }
 
     Box (
@@ -118,11 +121,14 @@ fun ResultScreen(
             ) {
                 Button(onClick = {
                     retryAction(text.toLongOrNull() ?: 0L)
-                    getSerial()
+                    //getSerial()
                 }) {
                     Text("Refresca")
                 }
-                Button(onClick = { /* Acción del segundo botón */ }) {
+                Button(onClick = {
+                    putDatosInternet(text)
+                    retryAction(0)
+                }) {
                     Text("Grava")
                 }
             }
