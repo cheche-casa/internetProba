@@ -33,12 +33,16 @@ class InternetViewModel(
     /** The mutable State that stores the status of the most recent request */
     var internetUiState: InternetUiState by mutableStateOf(InternetUiState.Loading)
         private set
+    var internetUiStateSerial: InternetUiStateSerial by mutableStateOf(InternetUiStateSerial.Loading)
+        private set
+
 
     /**
      * Call getMarsPhotos() on init so we can display status immediately.
      */
     init {
         getDatosInternet(serial = 0)
+        getSerial()
     }
 
     /**
@@ -55,6 +59,20 @@ class InternetViewModel(
             }
             catch (e: IOException) {
                 internetUiState = InternetUiState.Error
+            }
+        }
+    }
+
+    fun getSerial(){
+        viewModelScope.launch {
+            try {
+                val serialResult = internetRepository.getSerial()
+                internetUiStateSerial = InternetUiStateSerial.Success(
+                    serialResult
+                )
+            }
+            catch (e: IOException) {
+                internetUiStateSerial = InternetUiStateSerial.Error
             }
         }
     }

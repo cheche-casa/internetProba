@@ -28,8 +28,9 @@ import kotlin.reflect.KFunction1
 
 @Composable
 fun HomeScreen(
-    internetUiState: InternetUiState,
     modifier: Modifier,
+    internetUiState: InternetUiState,
+    internetUiStateSerial: InternetUiStateSerial,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     retryAction: KFunction1<Long, Unit>
     ) {
@@ -41,8 +42,17 @@ fun HomeScreen(
         is InternetUiState.Error -> listOf(RexistroRemoto(1," ... Sen conexión ..."))
     }
     val updatedList: List<RexistroRemoto> = resultado
+
+    val serialString: String
+    serialString = when (internetUiStateSerial) {
+        is InternetUiStateSerial.Loading -> "0"
+        is InternetUiStateSerial.Success -> internetUiStateSerial.serial.serial.toString()
+        is InternetUiStateSerial.Error -> "-1"
+    }
+
     ResultScreen(
         updatedList,
+        serialString,
         modifier.padding(top = contentPadding.calculateTopPadding()),
         retryAction = retryAction
     )
@@ -51,6 +61,7 @@ fun HomeScreen(
 @Composable
 fun ResultScreen(
     strings: List<RexistroRemoto>,
+    serial: String,
     modifier: Modifier = Modifier,
     retryAction: KFunction1<Long, Unit>
 ){
@@ -78,7 +89,7 @@ fun ResultScreen(
             }
 
             Text(
-                text = "0",
+                text = serial,
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Start,
                 modifier = Modifier
