@@ -32,7 +32,8 @@ fun HomeScreen(
     internetUiState: InternetUiState,
     internetUiStateSerial: InternetUiStateSerial,
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    retryAction: KFunction1<Long, Unit>
+    retryAction: KFunction1<Long, Unit>,
+    getSerial: () -> Unit
     ) {
 
     val resultado: List<RexistroRemoto>
@@ -54,7 +55,8 @@ fun HomeScreen(
         updatedList,
         serialString,
         modifier.padding(top = contentPadding.calculateTopPadding()),
-        retryAction = retryAction
+        retryAction = retryAction,
+        getSerial = getSerial
     )
 }
 
@@ -63,7 +65,8 @@ fun ResultScreen(
     strings: List<RexistroRemoto>,
     serial: String,
     modifier: Modifier = Modifier,
-    retryAction: KFunction1<Long, Unit>
+    retryAction: KFunction1<Long, Unit>,
+    getSerial: () -> Unit
 ){
     var text by remember { mutableStateOf("") }
 
@@ -113,7 +116,10 @@ fun ResultScreen(
                     .padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Button(onClick = { retryAction(text.toLongOrNull() ?: 0L) }) {
+                Button(onClick = {
+                    retryAction(text.toLongOrNull() ?: 0L)
+                    getSerial()
+                }) {
                     Text("Refresca")
                 }
                 Button(onClick = { /* Acción del segundo botón */ }) {

@@ -41,8 +41,8 @@ class InternetViewModel(
      * Call getMarsPhotos() on init so we can display status immediately.
      */
     init {
-        getDatosInternet(serial = 0)
         getSerial()
+        getDatosInternet(serial = 0)
     }
 
     /**

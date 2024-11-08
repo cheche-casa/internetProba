@@ -37,6 +37,7 @@ fun InternetApp() {
                 internetUiStateSerial = internetViewModel.internetUiStateSerial,
                 contentPadding = it,
                 retryAction = internetViewModel::getDatosInternet,
+                getSerial = internetViewModel::getSerial
             )
         }
     }
